@@ -832,18 +832,18 @@ class Auth
      * @param string $signAlgorithm
      * @param bool $encode - Whether to base64 encode the signed message
      * @return string The signed message
-     * @throws OneLogin_Saml2_Error
+     * @throws Error
      */
     private function buildEmbeddedSignature(string $samlMessage, $signAlgorithm = XMLSecurityKey::RSA_SHA256, $encode = true)
     {
         $key = $this->_settings->getSPkey();
         if (empty($key)) {
-            throw new OneLogin_Saml2_Error(
+            throw new Error(
                 "Trying to embed signature in the SAML Request but can't load the SP private key",
-                OneLogin_Saml2_Error::PRIVATE_KEY_NOT_FOUND
+                Error::PRIVATE_KEY_NOT_FOUND
             );
         }
-        $signedSamlMessage = OneLogin_Saml2_Utils::addSign(
+        $signedSamlMessage = Utils::addSign(
             $samlMessage,
             $key,
             $this->_settings->getSPcert(),
